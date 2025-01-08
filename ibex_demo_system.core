@@ -16,6 +16,13 @@ filesets:
     files:
       - rtl/fpga/top_artya7.sv
     file_type: systemVerilogSource
+  files_basys3:
+    depend:
+      - lowrisc:ibex:rv_timer
+      - lowrisc:ibex:fpga_xilinx_shared
+    files:
+      - rtl/fpga/top_basys3.sv
+    file_type: systemVerilogSource
 
   files_xilinx_cw305:
     depend:
@@ -58,9 +65,9 @@ filesets:
       - dv/verilator/ibex_demo_system_main.cc: { file_type: cppSource }
       - dv/verilator/demo_system_verilator_lint.vlt:  { file_type: vlt }
 
-  files_constraints:
+  files_constraints_basys3:
     files:
-      - data/pins_artya7.xdc
+      - data/pins_basys3.xdc
     file_type: xdc
 
   files_constraints_cw305:
@@ -111,6 +118,21 @@ targets:
     tools:
       vivado:
         part: "xc7a35tcsg324-1"  # Default to Arty A7-35
+    parameters:
+      - SRAMInitFile
+      - PRIM_DEFAULT_IMPL=prim_pkg::ImplXilinx
+    flags:
+      use_bscane_tap: true
+  synth_basys3:
+    <<: *default_target
+    default_tool: vivado
+    filesets_append:
+      - files_basys3
+      - files_constraints_basys3
+    toplevel: top_basys3 
+    tools:
+      vivado:
+        part: "xc7a35tcpg236-1"  # Part number for Basys 3
     parameters:
       - SRAMInitFile
       - PRIM_DEFAULT_IMPL=prim_pkg::ImplXilinx

@@ -36,7 +36,7 @@ if [ $1 = "run" ]; then
 fi
 
 openocd -f $TCL_FILE -c "load_image $2 0x0" \
- -c "verify_image $2 0x0" \
- -c "echo \"Doing reset\"" \
- -c "reset $1" \
- $EXIT_CMD
+  -c "verify_image $2 0x0" \
+  -c "echo \"Doing reset\"" \
+  -c "reset $1" \
+  $EXIT_CMD
